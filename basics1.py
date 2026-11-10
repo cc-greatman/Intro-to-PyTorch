@@ -12,11 +12,14 @@ training_data = datasets.MNIST(
     transform=v2.Compose([v2.ToImage(), v2.ToDtype(torch.float32, scale=True)])
 )
 
-test_data = datasets.MNIST(
+testing_data = datasets.MNIST(
     root='data',
     train=False,
     download=True,
     transform=v2.Compose([v2.ToImage(), v2.ToDtype(torch.float32, scale=True)])
 )
 
-print(training_data.head())
+batch_size = 64
+
+train_data = DataLoader(training_data, batch_size=batch_size)
+test_data = DataLoader(testing_data, batch_size=batch_size)
