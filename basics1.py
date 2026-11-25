@@ -1,25 +1,24 @@
 import torch
-from torch import nn
-from torch.utils.data import DataLoader
-from torchvision import datasets
-from torchvision.transforms import v2
 
-# Load training data from open databases
-training_data = datasets.MNIST(
-    root='data',
-    train=True,
-    download=True,
-    transform=v2.Compose([v2.ToImage(), v2.ToDtype(torch.float32, scale=True)])
-)
+# Scalar: 0D tensor
+scalar = torch.tensor(5)
+print(f"Scalar: {scalar} \n " \
+      f"Shape: {scalar.shape}\n\n")
 
-testing_data = datasets.MNIST(
-    root='data',
-    train=False,
-    download=True,
-    transform=v2.Compose([v2.ToImage(), v2.ToDtype(torch.float32, scale=True)])
-)
+# Vector: 1D tensor
+vector = torch.tensor([1, 2, 3])
+print(f"Vector: {vector} \n " \
+      f"Shape: {vector.shape}\n\n")
 
-batch_size = 64
+# Matrix: 2D tensor
+matrix = torch.tensor([
+    [1, 2],
+    [3, 4]
+])
+print(f"Matrix: {matrix} \n " \
+      f"Shape: {matrix.shape}\n\n")
 
-train_data = DataLoader(training_data, batch_size=batch_size)
-test_data = DataLoader(testing_data, batch_size=batch_size)
+# 3D Tensor
+tensor_3d = torch.randn(1, 3, 4)
+print(f"Tensor: {tensor_3d} \n " \
+      f"Shape: {tensor_3d.shape}")
