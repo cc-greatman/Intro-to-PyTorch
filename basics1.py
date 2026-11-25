@@ -1,3 +1,4 @@
+import pandas as pd
 import torch
 
 # Scalar: 0D tensor
@@ -54,3 +55,29 @@ print(f"Element wise multiplication:\n{mult_result}")
 # Dot product
 dot_result = torch.matmul(a, b)
 print(f"Dot product:\n{dot_result}")
+
+# Pytorch also supports broadcasting:
+# Allows tensors with different shapes to be combined automatically during operations
+x = torch.tensor([[1, 3, 5], [4, 5, 6]])
+bias = torch.tensor([2, 3, 5])
+
+print(f"Broadcasting result: {x * bias}")
+
+filepath = './Dataset/Concrete_Data.csv'
+df = pd.read_csv(filepath)
+
+# Calling the columns of the dataframe to a list
+cols = df.columns.tolist()
+
+# Checking for missing values
+missing = df.isnull().sum()
+
+# Inputs: all columns except the last one
+inputs = df.iloc[:, :-1]
+
+# Target: only the last column
+target = df.iloc[:, -1]
+
+# Convert inputs and targets to PyTorch tensors
+inputs_tensor = torch.tensor(inputs.values, dtype=torch.float32)
+target_tensor = torch.tensor(target.values, dtype=torch.float32)
