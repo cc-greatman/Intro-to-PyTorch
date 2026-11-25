@@ -39,3 +39,18 @@ print(f"Tensor: {tensor_3d} \n " \
 tensor_3_1_d = torch.rand((2, 3, 4))
 print(f"Different type of Tensor: {tensor_3_1_d}\n\n" \
       f"Shape: {tensor_3_1_d.shape}")
+
+a = torch.tensor([1, 3, 5])
+b = torch.tensor([2, 4, 6])
+
+# Element wise addition
+add_result = a + b
+print(f"Element wise addition:\n{add_result}")
+
+# Element wise multiplication
+mult_result = a * b
+print(f"Element wise multiplication:\n{mult_result}")
+
+# Dot product
+dot_result = torch.matmul(a, b)
+print(f"Dot product:\n{dot_result}")
