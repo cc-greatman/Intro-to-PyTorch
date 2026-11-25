@@ -23,6 +23,18 @@ tensor_3d = torch.randn(1, 3, 4)
 print(f"Tensor: {tensor_3d} \n " \
       f"Shape: {tensor_3d.shape}")
 
+# Create tensor from a Python list or number.
+# tensor = torch.tensor()
+
+# Create tensor filled with zeros.
+# zeros = torch.zeros()
+
+# Create tensor filled with ones.
+# ones = torch.ones()
+
+# Create tensor filled with random numbers between 0 and 1.
+# radn = torch.rand()
+
 # Different type of 3D tensor
 tensor_3_1_d = torch.rand((2, 3, 4))
 print(f"Different type of Tensor: {tensor_3_1_d}\n\n" \
