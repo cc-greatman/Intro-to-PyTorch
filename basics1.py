@@ -22,3 +22,8 @@ print(f"Matrix: {matrix} \n " \
 tensor_3d = torch.randn(1, 3, 4)
 print(f"Tensor: {tensor_3d} \n " \
       f"Shape: {tensor_3d.shape}")
+
+# Different type of 3D tensor
+tensor_3_1_d = torch.rand((2, 3, 4))
+print(f"Different type of Tensor: {tensor_3_1_d}\n\n" \
+      f"Shape: {tensor_3_1_d.shape}")
