@@ -79,5 +79,10 @@ inputs = df.iloc[:, :-1]
 target = df.iloc[:, -1]
 
 # Convert inputs and targets to PyTorch tensors
+# When creating tensors from a numpy array or DataFrame, we often need to
+# specify dtype=ftorch.loat32
 inputs_tensor = torch.tensor(inputs.values, dtype=torch.float32)
 target_tensor = torch.tensor(target.values, dtype=torch.float32)
+
+print(f"Inputs shape: {inputs_tensor.shape} \n\n " \
+      f"Target shape: {target_tensor.shape}")
