@@ -1,4 +1,5 @@
 import pandas as pd
+from sklearn.preprocessing import StandardScaler
 import torch
 
 # Step 1: Tiny toy dataset
@@ -21,3 +22,8 @@ y_pred = predict(x)
 # Step 5: Show results
 print(f"Predictions: {y_pred}")
 
+def mse_loss(pred, val):
+    return torch.mean((pred - val) ** 2)
+
+loss = mse_loss(y_pred, y)
+print(f"MSE loss: {loss.item()}")
