@@ -11,7 +11,7 @@ y = x**2 + 0.1 * torch.rand_like(x)
 
 # Set learning rate and epochs
 lr = 0.01
-epochs = 300
+epochs = 3000
 
 # Defining dimensions
 input_dim = 1
@@ -32,6 +32,7 @@ w1_relu = torch.randn(input_dim, hidden_dim, requires_grad=True)
 w2_relu = torch.randn(hidden_dim, output_dim, requires_grad=True)
 b1_relu = torch.randn(hidden_dim, requires_grad=True)
 b2_relu = torch.randn(output_dim, requires_grad=True)
+
 def my_relu(x):
     return torch.clamp(x, min=0)
 
@@ -73,41 +74,71 @@ for epoch in range(epochs):
 
     losses_linear.append(lin_loss.item())
 
-    if (epoch + 1) % 50 == 0:
-        print(f"Epoch {epoch+1}: Loss = {lin_loss:.4f}")
-
-for epoch in range(epochs):
-
     # Training the Non-linear model
     nonlin_pred = predict_relu(x)
     relu_loss = mse_loss(nonlin_pred, y)
-
+    
     # Backward Pass
     relu_loss.backward()
-
+    
     # Update the parameter
     with torch.no_grad():
         w1_relu -= lr * w1_relu.grad
         w2_relu -= lr * w2_relu.grad
         b1_relu -= lr * b1_relu.grad
         b2_relu -= lr * b2_relu.grad
-       
+           
         # Gradient reset
         w1_relu.grad.zero_()
         w2_relu.grad.zero_()
         b1_relu.grad.zero_()
         b2_relu.grad.zero_()
-
+    
     losses_relu.append(relu_loss.item())
+    
 
-    if (epoch + 1) % 50 == 0:
-        print(f"Epoch {epoch+1}: Loss = {relu_loss:.4f}")
+# plt.plot(losses_linear, label='Linear -> Linear')
+# plt.plot(losses_relu, label='Linear -> ReLU -> Linear')
+# plt.xlabel("Number of Epochs")
+# plt.ylabel("MSE Loss")
+# plt.title("Training loss comparison")
+# plt.legend()
+# plt.grid(True)
+# plt.show()
 
-plt.plot(losses_linear, label='Linear -> Linear')
-plt.plot(losses_relu, label='Linear -> ReLU -> Linear')
-plt.xlabel("Number of Epochs")
-plt.ylabel("MSE Loss")
-plt.title("Training loss comparison")
-plt.legend()
+# Predictions and Sorting
+y_pred_lin = lin_pred.detach()
+y_pred_relu = nonlin_pred.detach()
+
+# Sort for smooth plotting
+sorted_idx = torch.argsort(x.squeeze())
+
+x_sorted = x.squeeze()[sorted_idx]
+y_sorted_true = y.squeeze()[sorted_idx]
+
+y_sorted_lin = y_pred_lin.squeeze()[sorted_idx]
+y_sorted_relu = y_pred_relu.squeeze()[sorted_idx]
+
+plt.figure(figsize=(10,8))
+
+# Subplot 1 - Linear -> Linear
+plt.subplot(1, 2, 1)
+plt.scatter(x_sorted.numpy(), y_sorted_true.numpy(), color='lightblue', label='True Data', alpha=0.7)
+plt.plot(x_sorted.numpy(), y_sorted_lin.numpy(), color='red', label='Linear Prediction', linewidth=2)
+plt.title('Linear -> Linear')
 plt.grid(True)
+plt.legend()
+plt.xlabel('x')
+plt.ylabel('y')
+
+plt.subplot(1, 2, 2)
+plt.scatter(x_sorted.numpy(), y_sorted_true.numpy(), color='lightblue', label='True Data', alpha=0.7)
+plt.plot(x_sorted.numpy(), y_sorted_relu.numpy(), color='red', label='ReLU Prediction', linewidth=2)
+plt.title('Linear -> ReLU -> Linear')
+plt.grid(True)
+plt.legend()
+plt.xlabel('x')
+plt.ylabel('y')
+
+plt.tight_layout()
 plt.show()
