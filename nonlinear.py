@@ -24,3 +24,41 @@ def predict(x):
 
 y_pred = predict(x)
 print("Predictions:", y_pred)
+
+# Defining ReLU activation function for intuition
+def my_relu(x):
+    """
+    A simple implementation of the Rectified Linear Unit (ReLU) activation function. 
+    It returns the input tensor x if its value is greater than 0; otherwise, it returns 0.
+    """
+    return torch.clamp(x, min=0) 
+
+# Test on a simple tensor
+test_x = torch.tensor([-2.0, -1.0, 0.0, 1.0, 2.0])
+print("Input: ", test_x, "\n" \
+      "ReLU output: ", my_relu(test_x))
+
+# Defining Sigmoid activation function for intuition too 😂
+def my_sigmoid(x):
+    """
+    A simple implementation of the Sigmoid activation function.
+    It compresses values into the range (0, 1)
+    """
+    return 1 / (1 + torch.exp(-x))
+
+# Testing for Sigmoid activation function
+print("Input: ", test_x, "\n" \
+      "Sigmoid output: ", my_sigmoid(test_x))
+
+# Defining Tanh activation function for more intuition
+def my_tanh(x):
+    """
+    A simple implementation of the Hyperbolic Tangent activation function.
+    it compresses values in the range (-1, 1)
+    """
+    a, b = torch.exp(x) ,torch.exp(-x)
+    return (a - b) / (a + b) 
+
+# Testing for Tanh activation function
+print("Input: ", test_x, "\n" \
+      "Tanh output: ", my_tanh(test_x))
