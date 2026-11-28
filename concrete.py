@@ -1,3 +1,4 @@
+import matplotlib.pyplot as plt
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
 import torch
@@ -23,7 +24,7 @@ inputs_tensor = torch.tensor(inputs_scaled, dtype=torch.float32)
 output_tensor = torch.tensor(targets, dtype=torch.float32)
 
 # Set seed and shuffle
-torch.manual_seed(32)
+torch.manual_seed(42)
 num_samples = inputs_tensor.shape[0]
 indices = torch.randperm(num_samples)
 
@@ -89,4 +90,32 @@ for epoch in range(epochs):
     losses_train.append(train_loss.item())
 
     if (epoch+1) % 30 == 0:
-        print(f"Epoch [{epoch+1}/{epochs}]: Loss = {train_loss.item():.4f}")
+        print(f"Epoch [{epoch+1}/{epochs}]: Loss = {train_loss.item():.4f}\n")
+
+# plt.figure(figsize=(16,8))
+# plt.plot(range(epochs), losses_train, linestyle='-', color="blue")
+# plt.xlabel("Training Epoch")
+# plt.ylabel("Training Loss")
+# plt.title("Training Loss over time")
+# plt.grid(True)
+# plt.show()
+
+# Evaluating model performance
+with torch.no_grad():
+    train_prediction = model(inputs_train)
+    training_loss = mse_loss(train_prediction, outputs_train)
+
+    test_prediction = model(inputs_test)
+    testing_loss = mse_loss(test_prediction, outputs_test)
+
+print(f"Final training loss (MSE): {training_loss:.3f} \n" \
+      f"Final testing loss (MSE): {testing_loss:.3f} \n\n")
+
+# Calculate RMSE
+train_rsme = torch.sqrt(training_loss)
+test_rsme = torch.sqrt(testing_loss)
+
+print(f"Training RMSE: {train_rsme:.3f}MPa \n" \
+      f"Testing RSME: {test_rsme:.3f}MPa")
+
+    
