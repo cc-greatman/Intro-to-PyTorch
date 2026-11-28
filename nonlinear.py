@@ -14,8 +14,8 @@ output_dim = 1
 # Initialize parameters
 w1 = torch.randn(input_dim, hidden_dim,requires_grad=True) # Here w has a shape of (1, 3)
 w2 = torch.randn(hidden_dim, output_dim, requires_grad=True) # Here w has a shape of (3, 1)
-b1 = torch.randn(hidden_dim, requires_grad=True) # Here w has a shape of (3,)
-b2 = torch.randn(output_dim, requires_grad=True) # Here w has a shape of (1,)
+b1 = torch.randn(hidden_dim, requires_grad=True) # Here b has a shape of (3,)
+b2 = torch.randn(output_dim, requires_grad=True) # Here b has a shape of (1,)
 
 def predict(x):
     hidden = x @ w1 + b1 # @performs matrix multiplication(dot product)
